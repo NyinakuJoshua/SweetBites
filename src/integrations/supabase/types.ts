@@ -14,16 +14,381 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      addresses: {
+        Row: {
+          city: string
+          country: string | null
+          created_at: string | null
+          id: string
+          is_default: boolean | null
+          label: string
+          postal_code: string
+          state: string
+          street_address: string
+          user_id: string
+        }
+        Insert: {
+          city: string
+          country?: string | null
+          created_at?: string | null
+          id?: string
+          is_default?: boolean | null
+          label: string
+          postal_code: string
+          state: string
+          street_address: string
+          user_id: string
+        }
+        Update: {
+          city?: string
+          country?: string | null
+          created_at?: string | null
+          id?: string
+          is_default?: boolean | null
+          label?: string
+          postal_code?: string
+          state?: string
+          street_address?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      cakes: {
+        Row: {
+          allergens: string[] | null
+          available_flavors: string[] | null
+          available_sizes: string[] | null
+          base_price: number
+          category: Database["public"]["Enums"]["cake_category"]
+          created_at: string | null
+          description: string | null
+          id: string
+          image_url: string | null
+          ingredients: string[] | null
+          is_active: boolean | null
+          is_customizable: boolean | null
+          name: string
+          rating: number | null
+          review_count: number | null
+          updated_at: string | null
+        }
+        Insert: {
+          allergens?: string[] | null
+          available_flavors?: string[] | null
+          available_sizes?: string[] | null
+          base_price: number
+          category: Database["public"]["Enums"]["cake_category"]
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          ingredients?: string[] | null
+          is_active?: boolean | null
+          is_customizable?: boolean | null
+          name: string
+          rating?: number | null
+          review_count?: number | null
+          updated_at?: string | null
+        }
+        Update: {
+          allergens?: string[] | null
+          available_flavors?: string[] | null
+          available_sizes?: string[] | null
+          base_price?: number
+          category?: Database["public"]["Enums"]["cake_category"]
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          ingredients?: string[] | null
+          is_active?: boolean | null
+          is_customizable?: boolean | null
+          name?: string
+          rating?: number | null
+          review_count?: number | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      cart_items: {
+        Row: {
+          cake_id: string
+          created_at: string | null
+          custom_message: string | null
+          id: string
+          item_price: number
+          quantity: number | null
+          selected_flavor: string | null
+          selected_size: string | null
+          special_instructions: string | null
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          cake_id: string
+          created_at?: string | null
+          custom_message?: string | null
+          id?: string
+          item_price: number
+          quantity?: number | null
+          selected_flavor?: string | null
+          selected_size?: string | null
+          special_instructions?: string | null
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          cake_id?: string
+          created_at?: string | null
+          custom_message?: string | null
+          id?: string
+          item_price?: number
+          quantity?: number | null
+          selected_flavor?: string | null
+          selected_size?: string | null
+          special_instructions?: string | null
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "cart_items_cake_id_fkey"
+            columns: ["cake_id"]
+            isOneToOne: false
+            referencedRelation: "cakes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      order_items: {
+        Row: {
+          cake_id: string
+          created_at: string | null
+          custom_message: string | null
+          id: string
+          order_id: string
+          quantity: number
+          selected_flavor: string | null
+          selected_size: string | null
+          special_instructions: string | null
+          total_price: number
+          unit_price: number
+        }
+        Insert: {
+          cake_id: string
+          created_at?: string | null
+          custom_message?: string | null
+          id?: string
+          order_id: string
+          quantity: number
+          selected_flavor?: string | null
+          selected_size?: string | null
+          special_instructions?: string | null
+          total_price: number
+          unit_price: number
+        }
+        Update: {
+          cake_id?: string
+          created_at?: string | null
+          custom_message?: string | null
+          id?: string
+          order_id?: string
+          quantity?: number
+          selected_flavor?: string | null
+          selected_size?: string | null
+          special_instructions?: string | null
+          total_price?: number
+          unit_price?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "order_items_cake_id_fkey"
+            columns: ["cake_id"]
+            isOneToOne: false
+            referencedRelation: "cakes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "order_items_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      orders: {
+        Row: {
+          created_at: string | null
+          delivery_address_id: string | null
+          delivery_date: string | null
+          delivery_fee: number | null
+          delivery_time_slot: string | null
+          id: string
+          order_number: string
+          payment_method: string | null
+          payment_status: string | null
+          special_instructions: string | null
+          status: Database["public"]["Enums"]["order_status"] | null
+          subtotal: number
+          tax_amount: number | null
+          total_amount: number
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          delivery_address_id?: string | null
+          delivery_date?: string | null
+          delivery_fee?: number | null
+          delivery_time_slot?: string | null
+          id?: string
+          order_number: string
+          payment_method?: string | null
+          payment_status?: string | null
+          special_instructions?: string | null
+          status?: Database["public"]["Enums"]["order_status"] | null
+          subtotal: number
+          tax_amount?: number | null
+          total_amount: number
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          delivery_address_id?: string | null
+          delivery_date?: string | null
+          delivery_fee?: number | null
+          delivery_time_slot?: string | null
+          id?: string
+          order_number?: string
+          payment_method?: string | null
+          payment_status?: string | null
+          special_instructions?: string | null
+          status?: Database["public"]["Enums"]["order_status"] | null
+          subtotal?: number
+          tax_amount?: number | null
+          total_amount?: number
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "orders_delivery_address_id_fkey"
+            columns: ["delivery_address_id"]
+            isOneToOne: false
+            referencedRelation: "addresses"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          created_at: string | null
+          full_name: string | null
+          id: string
+          phone: string | null
+          role: Database["public"]["Enums"]["user_role"] | null
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string | null
+          full_name?: string | null
+          id?: string
+          phone?: string | null
+          role?: Database["public"]["Enums"]["user_role"] | null
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string | null
+          full_name?: string | null
+          id?: string
+          phone?: string | null
+          role?: Database["public"]["Enums"]["user_role"] | null
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      reviews: {
+        Row: {
+          cake_id: string
+          comment: string | null
+          created_at: string | null
+          id: string
+          is_approved: boolean | null
+          order_id: string | null
+          rating: number
+          user_id: string
+        }
+        Insert: {
+          cake_id: string
+          comment?: string | null
+          created_at?: string | null
+          id?: string
+          is_approved?: boolean | null
+          order_id?: string | null
+          rating: number
+          user_id: string
+        }
+        Update: {
+          cake_id?: string
+          comment?: string | null
+          created_at?: string | null
+          id?: string
+          is_approved?: boolean | null
+          order_id?: string | null
+          rating?: number
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reviews_cake_id_fkey"
+            columns: ["cake_id"]
+            isOneToOne: false
+            referencedRelation: "cakes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "reviews_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      generate_order_number: {
+        Args: Record<PropertyKey, never>
+        Returns: string
+      }
     }
     Enums: {
-      [_ in never]: never
+      cake_category:
+        | "birthday"
+        | "wedding"
+        | "anniversary"
+        | "seasonal"
+        | "slice"
+        | "cupcakes"
+      order_status:
+        | "pending"
+        | "confirmed"
+        | "preparing"
+        | "ready"
+        | "delivered"
+        | "cancelled"
+      user_role: "customer" | "admin"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +515,24 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      cake_category: [
+        "birthday",
+        "wedding",
+        "anniversary",
+        "seasonal",
+        "slice",
+        "cupcakes",
+      ],
+      order_status: [
+        "pending",
+        "confirmed",
+        "preparing",
+        "ready",
+        "delivered",
+        "cancelled",
+      ],
+      user_role: ["customer", "admin"],
+    },
   },
 } as const
