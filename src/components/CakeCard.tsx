@@ -3,6 +3,7 @@ import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Heart, Star, Plus } from "lucide-react"
 import { useState } from "react"
+import { useCart } from "@/hooks/use-cart"
 
 interface CakeCardProps {
   id: string
@@ -18,6 +19,7 @@ interface CakeCardProps {
 }
 
 export const CakeCard = ({ 
+  id,
   name, 
   image, 
   price, 
@@ -29,6 +31,15 @@ export const CakeCard = ({
   description 
 }: CakeCardProps) => {
   const [isLiked, setIsLiked] = useState(false)
+  const { addItem } = useCart()
+
+  const handleAddToCart = async () => {
+    await addItem(id, {
+      quantity: 1,
+      selectedSize: 'Standard',
+      selectedFlavor: 'Original'
+    })
+  }
 
   return (
     <Card className="group overflow-hidden border-border hover:shadow-elegant transition-all duration-300 hover:-translate-y-2 bg-card">
@@ -106,7 +117,7 @@ export const CakeCard = ({
       </CardContent>
 
       <CardFooter className="p-4 pt-0 flex gap-2">
-        <Button variant="order" className="flex-1">
+        <Button variant="order" className="flex-1" onClick={handleAddToCart}>
           <Plus className="h-4 w-4 mr-2" />
           Add to Cart
         </Button>
