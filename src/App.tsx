@@ -15,6 +15,10 @@ import SeasonalCakes from "./pages/cakes/SeasonalCakes";
 import SliceCakes from "./pages/cakes/SliceCakes";
 import Cupcakes from "./pages/cakes/Cupcakes";
 import Cart from "./pages/Cart";
+import Checkout from "./pages/Checkout";
+import Orders from "./pages/Orders";
+import PaymentSuccess from "./pages/PaymentSuccess";
+import Admin from "./pages/Admin";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -33,6 +37,10 @@ const App = () => (
               <Route path="/about" element={<About />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/cart" element={<Cart />} />
+              <Route path="/checkout" element={<Checkout />} />
+              <Route path="/orders" element={<Orders />} />
+              <Route path="/payment-success" element={<PaymentSuccess />} />
+              <Route path="/admin" element={<Admin />} />
               <Route path="/cakes/birthday" element={<BirthdayCakes />} />
               <Route path="/cakes/wedding" element={<WeddingCakes />} />
               <Route path="/cakes/seasonal" element={<SeasonalCakes />} />

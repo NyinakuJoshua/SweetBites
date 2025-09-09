@@ -6,6 +6,7 @@ import { Separator } from "@/components/ui/separator";
 import { ShoppingCart, Plus, Minus, X, Trash2 } from "lucide-react";
 import { useCart } from "@/hooks/use-cart";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 export const CartDrawer = () => {
   const { items, itemCount, totalAmount, loading, updateItem, removeItem } = useCart();
@@ -149,13 +150,11 @@ export const CartDrawer = () => {
               </div>
               
               <div className="space-y-2">
-                <Button 
-                  className="w-full bg-gradient-primary hover:opacity-90" 
-                  size="lg"
-                  onClick={() => setOpen(false)}
-                >
-                  Proceed to Checkout
-                </Button>
+                  <Link to="/checkout" className="block">
+                    <Button className="w-full bg-gradient-primary hover:opacity-90" size="lg">
+                      Proceed to Checkout
+                    </Button>
+                  </Link>
                 <Button 
                   variant="outline" 
                   className="w-full" 

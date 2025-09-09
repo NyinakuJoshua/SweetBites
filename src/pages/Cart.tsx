@@ -198,9 +198,11 @@ const Cart = () => {
                     </div>
                   </div>
 
-                  <Button className="w-full mt-6 bg-gradient-primary hover:opacity-90" size="lg">
-                    Proceed to Checkout
-                  </Button>
+                  <Link to="/checkout">
+                    <Button className="w-full mt-6 bg-gradient-primary hover:opacity-90" size="lg">
+                      Proceed to Checkout
+                    </Button>
+                  </Link>
                   
                   <Link to="/" className="block mt-3">
                     <Button variant="outline" className="w-full">

@@ -8,25 +8,29 @@ type CartItem = Database['public']['Tables']['cart_items']['Row'] & {
   cake?: Database['public']['Tables']['cakes']['Row'];
 };
 
+interface AddItemOptions {
+  quantity?: number;
+  selectedSize?: string;
+  selectedFlavor?: string;
+  customMessage?: string;
+  specialInstructions?: string;
+}
+
+interface UpdateItemOptions {
+  quantity?: number;
+  selectedSize?: string;
+  selectedFlavor?: string;
+  customMessage?: string;
+  specialInstructions?: string;
+}
+
 interface CartContextType {
   items: CartItem[];
   itemCount: number;
   totalAmount: number;
   loading: boolean;
-  addItem: (cakeId: string, options?: {
-    quantity?: number;
-    selectedSize?: string;
-    selectedFlavor?: string;
-    customMessage?: string;
-    specialInstructions?: string;
-  }) => Promise<void>;
-  updateItem: (itemId: string, updates: {
-    quantity?: number;
-    selectedSize?: string;
-    selectedFlavor?: string;
-    customMessage?: string;
-    specialInstructions?: string;
-  }) => Promise<void>;
+  addItem: (cakeId: string, options?: AddItemOptions) => Promise<void>;
+  updateItem: (itemId: string, updates: UpdateItemOptions) => Promise<void>;
   removeItem: (itemId: string) => Promise<void>;
   clearCart: () => Promise<void>;
   refreshCart: () => Promise<void>;
@@ -72,13 +76,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
-  const addItem = async (cakeId: string, options: {
-    quantity?: number;
-    selectedSize?: string;
-    selectedFlavor?: string;
-    customMessage?: string;
-    specialInstructions?: string;
-  } = {}) => {
+  const addItem = async (cakeId: string, options: AddItemOptions = {}) => {
     if (!user) {
       toast({
         title: "Sign In Required",
@@ -143,7 +141,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
-  const updateItem = async (itemId: string, updates: any) => {
+  const updateItem = async (itemId: string, updates: UpdateItemOptions) => {
     try {
       const { error } = await supabase
         .from('cart_items')
