@@ -34,6 +34,18 @@ export const CakeCard = ({
   const { addItem } = useCart()
 
   const handleAddToCart = async () => {
+    // Guard: Home page uses demo items with non-DB ids. Prevent failing insert.
+    const looksLikeUuid = id.includes('-') && id.length >= 30
+    if (!looksLikeUuid) {
+      const { toast } = await import('@/hooks/use-toast')
+      toast({
+        title: 'Please browse cakes',
+        description: 'Open any category to add real products to your cart.',
+        variant: 'destructive'
+      })
+      return
+    }
+
     await addItem(id, {
       quantity: 1,
       selectedSize: 'Standard',
