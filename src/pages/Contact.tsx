@@ -33,15 +33,35 @@ export default function Contact() {
     e.preventDefault();
     setIsSubmitting(true);
     
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    try {
+      const response = await fetch('/functions/v1/send-contact-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        toast({
+          title: "Message Sent!",
+          description: "We'll get back to you within 24 hours."
+        });
+        setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
+      } else {
+        throw new Error(result.error || 'Failed to send message');
+      }
+    } catch (error) {
+      console.error('Contact form error:', error);
+      toast({
+        title: "Error",
+        description: "Failed to send message. Please try again or call us directly.",
+        variant: "destructive"
+      });
+    }
     
-    toast({
-      title: "Message Sent!",
-      description: "We'll get back to you within 24 hours."
-    });
-    
-    setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
     setIsSubmitting(false);
   };
 
@@ -182,7 +202,7 @@ export default function Contact() {
                   <Mail className="h-5 w-5 text-primary mt-0.5" />
                   <div>
                     <p className="font-medium text-foreground">Email Us</p>
-                    <p className="text-sm text-muted-foreground">hello@sweetbites.com</p>
+                    <p className="text-sm text-muted-foreground">joshuanyinaku48@gmail.com</p>
                     <p className="text-xs text-muted-foreground">We reply within 24 hours</p>
                   </div>
                 </div>
