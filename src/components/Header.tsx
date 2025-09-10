@@ -1,10 +1,36 @@
 import { Button } from "@/components/ui/button"
-import { ShoppingCart, User, Heart, Search, ChevronDown } from "lucide-react"
+import { ShoppingCart, User, Heart, Search, ChevronDown, Shield } from "lucide-react"
 import { useAuth } from "@/hooks/use-auth"
 import { CartDrawer } from "@/components/CartDrawer"
+import { useEffect, useState } from "react"
+import { supabase } from "@/integrations/supabase/client"
 
 export const Header = () => {
   const { user, signOut } = useAuth();
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  useEffect(() => {
+    const checkAdminRole = async () => {
+      if (user) {
+        try {
+          const { data: profile } = await supabase
+            .from('profiles')
+            .select('role')
+            .eq('user_id', user.id)
+            .single();
+          
+          setIsAdmin(profile?.role === 'admin');
+        } catch (error) {
+          console.error('Error checking admin role:', error);
+          setIsAdmin(false);
+        }
+      } else {
+        setIsAdmin(false);
+      }
+    };
+
+    checkAdminRole();
+  }, [user]);
 
   return (
     <header className="sticky top-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-border">
@@ -85,6 +111,13 @@ export const Header = () => {
                     <a href="/orders" className="block px-4 py-2 text-sm text-foreground hover:bg-accent hover:text-accent-foreground transition-colors">
                       My Orders
                     </a>
+                    {isAdmin && (
+                      <a href="/admin" className="block px-4 py-2 text-sm text-foreground hover:bg-accent hover:text-accent-foreground transition-colors">
+                        <Shield className="h-4 w-4 inline mr-2" />
+                        Admin Dashboard
+                      </a>
+                    )}
+                    <div className="border-t border-border my-1"></div>
                     <button 
                       onClick={signOut}
                       className="block w-full text-left px-4 py-2 text-sm text-foreground hover:bg-accent hover:text-accent-foreground transition-colors"
