@@ -1,4 +1,5 @@
 import { CakeCategoryPage } from '@/components/CakeCategoryPage';
+import weddingHero from '@/assets/wedding-hero.jpg';
 
 export default function WeddingCakes() {
   return (
@@ -6,6 +7,7 @@ export default function WeddingCakes() {
       category="wedding"
       title="Wedding Cakes"
       description="Create the perfect centerpiece for your dream wedding with our exquisite wedding cakes. From classic multi-tiered designs to modern artistic creations, each cake is crafted to reflect your unique love story and wedding theme."
+      heroImage={weddingHero}
     />
   );
 }

@@ -106,8 +106,18 @@ export function CakeCategoryPage({ category, title, description, heroImage }: Ca
       <Header />
       
       {/* Hero Section */}
-      <section className="relative py-24 bg-gradient-subtle">
-        <div className="container mx-auto px-4 text-center">
+      <section className="relative py-24 bg-gradient-subtle overflow-hidden">
+        {heroImage && (
+          <div className="absolute inset-0 z-0">
+            <img 
+              src={heroImage} 
+              alt={title}
+              className="w-full h-full object-cover opacity-20"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-background/80 to-background/60" />
+          </div>
+        )}
+        <div className="container mx-auto px-4 text-center relative z-10">
           <h1 className="text-4xl lg:text-6xl font-bold text-foreground mb-6">
             {title}
           </h1>
